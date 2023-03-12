@@ -1,0 +1,15 @@
+ module_config {
+    module_library : "/apollo/bazel-bin/cyber/demo_cc/component_common02/liblasers_cpt.so"
+    components {
+        class_name : "LaserCpt"
+        config {
+            name : "my_laser"
+            readers {
+                channel: "/front/laser"
+            }
+            readers {
+                channel: "/back/laser"
+            }
+        }
+    }
+}

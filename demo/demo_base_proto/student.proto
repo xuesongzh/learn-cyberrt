@@ -1,0 +1,14 @@
+// 使用的 proto 版本, Cyber RT 中目前使用的是 proto2
+syntax = "proto2";
+//包
+package apollo.cyber.demo_base_proto;
+
+//消息 --- message 是关键字，Student 消息名称
+message Student {
+    //字段
+    //字段格式: 字段规则 数据类型 字段名称 字段编号
+    required string name = 1;
+    optional uint64 age = 2;
+    optional double height = 3;
+    repeated string books = 4;
+}

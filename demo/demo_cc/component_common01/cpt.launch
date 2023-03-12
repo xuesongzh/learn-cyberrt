@@ -1,0 +1,7 @@
+<cyber>
+    <module>
+        <name>my_module</name>
+        <dag_conf>/apollo/cyber/demo_cc/component_common01/cpt.dag</dag_conf>
+        <process_name>my_cpt</process_name>
+    </module>
+</cyber>

@@ -1,0 +1,7 @@
+<cyber>
+    <module>
+        <name>my_laser</name>
+        <dag_conf>/apollo/cyber/demo_cc/component_common02/cpt2.dag</dag_conf>
+        <process_name>my_laser</process_name>
+    </module>
+</cyber>

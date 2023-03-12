@@ -1,0 +1,12 @@
+module_config {
+    module_library : "/apollo/bazel-bin/cyber/demo_cc/component_common01/lib_common_cpt.so"
+    components {
+        class_name : "CommonCpt"
+        config {
+            name : "my_common"
+            readers {
+                channel: "chatter"
+            }
+        }
+    }
+}

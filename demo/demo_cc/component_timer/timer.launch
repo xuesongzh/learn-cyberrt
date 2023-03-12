@@ -1,0 +1,7 @@
+<cyber>
+    <module>
+        <name>my_timer</name>
+        <dag_conf>/apollo/cyber/demo_cc/component_timer/timer.dag</dag_conf>
+        <process_name>my_timer</process_name>
+    </module>
+</cyber>

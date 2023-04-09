@@ -102,7 +102,7 @@ cyber提供的功能概括起来包括2方面：
 1. **用户接口** - 提供灵活的用户接口
 2. **工具** - 提供一系列的工具，例如bag包播放，点云可视化，消息监控等
 
-![cyber](img/arch.jpg)  
+![cyber](../img/arch.jpg)  
 总结起来就是，cyber是一个分布式收发消息，和调度框架，同时对外提供一系列的工具和接口来辅助开发和定位问题。其中cyber对比ROS来说有很多优势，唯一的劣势是cyber相对ROS没有丰富的算法库支持。  
 
 下面我们开始分析整个cyber的代码流程。
@@ -587,7 +587,7 @@ Initialize方法在派生类中重写了，这里有2个Initialize方法，分�
     }
     scheduler::Instance()->RemoveTask(node_->Name());
   }
-```  
+```
 
 **GetProtoConfig方法**  
 获取protobuf格式的配置  
@@ -665,7 +665,7 @@ bool Component<M0, M1, NullType, NullType>::Process(
 ```
 
 **Initialize方法**  
-  
+
 ```c++
 template <typename M0, typename M1>
 bool Component<M0, M1, NullType, NullType>::Initialize(
@@ -1082,7 +1082,7 @@ class DataVisitor<M0, M1, M2, NullType> : public DataVisitorBase {
     }
     return false;
   }
-```  
+```
 2. 实际上如果有多个消息的时候，会以第1个消息为基准，然后把其它消息的最新消息一起放入融合好的buffer_fusion_。  
 
 ```c++
@@ -1111,7 +1111,7 @@ class DataVisitor<M0, M1, M2, NullType> : public DataVisitorBase {
 3. DataFusion类是一个虚类，定义了数据融合的接口"Fusion()"，Apollo里只提供了一种数据融合的方式，即以第一个消息的时间为基准，取其它最新的消息，当然也可以在这里实现其它的数据融合方式。  
 
 
- 
+
 #### DataDispatcher数据分发器
 接下来我们看DataDispatcher的实现。  
 ```c++
@@ -1228,7 +1228,7 @@ bool ChannelBuffer<T>::Fetch(uint64_t* index,
         // 1. 拷贝消息到指针
         traffic_light_.CopyFrom(*traffic_light);
       });
-```  
+```
 
 这里需要注意系统在component中自动帮我们创建了一个DataVisitor，订阅component中的消息，融合获取最新的消息之后，执行Proc回调。需要注意component的第一个消息一定是模块的基准消息来源，也就是模块中最主要的参考消息，不能随便调换顺序。  
 
@@ -2018,7 +2018,7 @@ void Timer::Start() {
     }
   }
 }
-``` 
+```
 Start中的步骤很简单:  
 1. 判断定时器是否已经启动
 2. 如果定时器没有启动，则初始化定时任务
@@ -2099,7 +2099,7 @@ bool Timer::InitTimerTask() {
 512个bucket
 64个round    
 tick 为2ms
-``` 
+```
 
 TimingWheel是通过AddTask调用执行的，下面是具体过程。
 ```c++
@@ -2148,7 +2148,7 @@ void TimingWheel::AddTask(const std::shared_ptr<TimerTask>& task,
 1. 从上述过程可以看出Cyber的时间轮单独采用一个线程调度执行"std::thread([this]() { this->TickFunc(); })"，定时任务则放入协程池中去执行。也就是说主线程单独执行时间计数，而具体的定时任务开多个协程去执行，可以并发执行多个定时任务。定时任务中最好不要引入阻塞的操作，或者执行时间过长。   
 2. Cyber定时器中引入了2级时间轮的方法（消息队列kafka中也是类似实现），类似时钟的小时指针和分钟指针，当一级时间轮触发完成之后，再移动到二级时间轮中执行。第二级时间轮不能超过一圈，因此定时器的最大定时时间为64*512*2ms，最大不超过约65s。 
 ![timing_wheel_multi](../img/timing_wheel_multi.jpg)     
- 
+
 #### Tick
 接下来我们看下时间轮中的Tick是如何工作的。在上述"AddTask"中会调用"Start"函数启动一个线程，线程执行"TickFunc"。  
 ```c++
